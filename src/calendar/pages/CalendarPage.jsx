@@ -1,9 +1,7 @@
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar'
-import format from 'date-fns/format'
-import parse from 'date-fns/parse'
-import startOfWeek from 'date-fns/startOfWeek'
-import getDay from 'date-fns/getDay'
-import enUS from 'date-fns/locale/en-US'
+import 'react-big-calendar/lib/css/react-big-calendar.css'
+import { addHours, format, parse, startOfWeek, getDay } from 'date-fns'
+import { enUS } from 'date-fns/locale'
 import { Navbar } from "../components"
 
 const locales = {
@@ -18,16 +16,28 @@ const localizer = dateFnsLocalizer({
   locales,
 })
 
+const events = [{
+  title: 'Boss birthday',
+  notes: 'Buy a cake',
+  start: new Date(),
+  end:  addHours(new Date(), 1),
+  bgColor: '#fff',
+  user: {
+    _id:'123',
+    name: 'Jesus E.'
+  }
+}]
+
 export const CalendarPage = () => {
   return (
     <>
       <Navbar/>
       <Calendar
         localizer={localizer}
-        events={myEventsList}
+        events={ events }
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 500 }}
+        style={{ height: 'calc(100vh - 112px)' }}
       />
     </>
   )
