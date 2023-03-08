@@ -11,7 +11,7 @@ export const CalendarModal = ({ isOpen, onClose, bgColor = "bg-black", children 
                     </div>
                     
                     {/* content */}
-                    <div className='w-11/12 md:w-3/4 lg:w-2/6 z-70 relative'>
+                    <div className='w-11/12 xs:w-3/4 sm:w-1/2 md:w-2/5 lg:w-1/4 z-70 relative'>
                         { children }
                     </div>
                 </div>

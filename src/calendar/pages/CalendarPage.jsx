@@ -1,9 +1,13 @@
+import { useState } from 'react'
 import { Calendar } from 'react-big-calendar'
-import { addHours } from 'date-fns'
+import DatePicker from "react-datepicker";
+import { addHours, differenceInSeconds } from 'date-fns'
 import { CalendarEventBox, CalendarModal, Navbar } from "../components"
 import { localizer } from '../../helpers'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBookmark, faSave } from '@fortawesome/free-solid-svg-icons'
+import "react-datepicker/dist/react-datepicker.css";
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { useState } from 'react'
 
 const events = [{
   title: 'Boss birthday',
@@ -18,12 +22,13 @@ const events = [{
 
 
 export const CalendarPage = () => {
-
+  
+  //Calendar Functions
   const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'month')
   
   const eventStyleGetter = (event, start, end, isSelected) => {
     const className = "bg-green-500"
-  
+    
     return {
       className
     }
@@ -38,9 +43,9 @@ export const CalendarPage = () => {
   const onChangeView = (event) => {
     localStorage.setItem('lastView', event)
   } 
-
+  
+  //Modal Functions
   const [showModal, setShowModal] = useState(true);
-
   const handleShowModal = () => {
     setShowModal(true);
   };
@@ -49,7 +54,50 @@ export const CalendarPage = () => {
     setShowModal(false);
   };
 
+  //Form Functions
+  const [formValues, setFormValues] = useState({
+    startTime: new Date(),
+    endTime: addHours( new Date(), 2 ),
+    title: 'Jesus',
+    description: 'Esis'
+  })
+  
+  const handleInputChange = ( event ) => {
 
+    console.log(event);
+
+    setFormValues( prevState => {
+      return {
+        ...prevState,
+        [event.target.name]: event.target.value
+      }
+    })
+
+  }
+
+  const handleDateChange = ( event, target ) => {
+    setFormValues(prevState => {
+      return {
+        ...prevState,
+        [target]: event
+      }
+    })
+
+  }
+
+  const handleSubmit = evt => {
+    evt.preventDefault()
+
+    const difference = differenceInSeconds(formValues.endTime, formValues.startTime)
+
+    if( isNaN( difference ) || difference <= 0 ){
+      return "Not valid range of time"
+    }
+
+    if( !formValues.title ) return
+
+    console.log(difference);
+  }
   return (
     <>
       <Navbar/>
@@ -60,12 +108,40 @@ export const CalendarPage = () => {
       >
         
         <div className="bg-white rounded-lg p-6">
-          {/* modal content */}
-          <h2 className="text-2xl font-bold mb-4">Modal title</h2>
-          <p className="mb-4">Modal content goes here</p>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-lg" onClick={handleCloseModal}>
-            Close
-          </button>
+
+          <form onSubmit={ handleSubmit } >
+
+            <h1 className='font-bold text-3xl mb-4'> <FontAwesomeIcon className='text-green-500' icon={faBookmark}/> New Event</h1>
+            <hr />
+
+            <div>
+              <h2 className='text-lg my-1'>Start date and hour</h2>
+              <DatePicker  selected={ formValues.startTime } name='startTime' onChange={ ( date ) => handleDateChange(date, 'startTime') } minDate={formValues.startTime} dateFormat='Pp' showTimeSelect className='h-10 pl-2 py-2 rounded-md  border-2 w-full focus:outline-green-500'/>
+            </div>
+            
+            <div>
+              <h2 className='text-lg my-1'>End date and hour</h2>
+              <DatePicker selected={ formValues.endTime } name='endTime' onChange={ ( date ) => handleDateChange(date, 'endTime') } minDate={formValues.startTime} dateFormat='Pp' showTimeSelect className='h-10 pl-2 py-2 rounded-md  border-2 w-full focus:outline-green-500'/>
+            </div>
+
+            <hr />
+
+            <div>
+              <h2 className='text-lg my-1'>Title and notes</h2>
+              <input type="text" className='h-10 pl-2 py-2 rounded-md  border-2 w-full focus:outline-green-500' placeholder='Event title'  name='title' onChange={ handleInputChange } value={ formValues.title }/>
+            </div>
+            
+            <div>
+              <h2 className='text-lg my-1'>Short description</h2>
+              {/* <input type="text" className='h-10 pl-2 py-2 rounded-md  border-2 w-full focus:outline-green-500' /> */}
+              <textarea className='h-40 pl-2 py-2 rounded-md  border-2 w-full focus:outline-green-500 resize-none' cols="30" rows="10" placeholder='Write a brief description of this event' name='description' onChange={ handleInputChange } value={ formValues.description }></textarea>
+            </div>
+
+            <button className='w-24 h-11 p-2 mt-5 bg-green-500 border-sm rounded-md text-white hover:bg-green-400 active:bg-green-600'>
+              Save <FontAwesomeIcon icon={faSave}  className="text-lg mx-2"/>
+            </button>
+          </form>
+
         </div>
 
       </CalendarModal>
