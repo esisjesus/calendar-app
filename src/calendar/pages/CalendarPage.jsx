@@ -1,11 +1,14 @@
 import { useState } from 'react'
 import { Calendar } from 'react-big-calendar'
 import DatePicker from "react-datepicker";
-import { addHours, differenceInSeconds } from 'date-fns'
+import { addHours} from 'date-fns'
 import { CalendarEventBox, CalendarModal, Navbar } from "../components"
 import { localizer } from '../../helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBookmark, faSave } from '@fortawesome/free-solid-svg-icons'
+import { faBookmark, faCircleExclamation, faSave } from '@fortawesome/free-solid-svg-icons'
+import { useEventForm } from '../../hooks';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeDateModal, openDateModal } from '../../store';
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
@@ -45,66 +48,28 @@ export const CalendarPage = () => {
   } 
   
   //Modal Functions
-  const [showModal, setShowModal] = useState(true);
+
+  const dateModalIsOpen = useSelector(( state ) => state.ui.dateModalIsOpen)
+  const dispatch = useDispatch()
+  
   const handleShowModal = () => {
-    setShowModal(true);
+    dispatch(openDateModal)
   };
 
   const handleCloseModal = () => {
-    setShowModal(false);
+    dispatch(closeDateModal)
   };
 
   //Form Functions
-  const [formValues, setFormValues] = useState({
-    startTime: new Date(),
-    endTime: addHours( new Date(), 2 ),
-    title: 'Jesus',
-    description: 'Esis'
-  })
-  
-  const handleInputChange = ( event ) => {
+  const {formStatus, formValues, handleDateChange, handleInputChange, handleSubmit} = useEventForm()
 
-    console.log(event);
-
-    setFormValues( prevState => {
-      return {
-        ...prevState,
-        [event.target.name]: event.target.value
-      }
-    })
-
-  }
-
-  const handleDateChange = ( event, target ) => {
-    setFormValues(prevState => {
-      return {
-        ...prevState,
-        [target]: event
-      }
-    })
-
-  }
-
-  const handleSubmit = evt => {
-    evt.preventDefault()
-
-    const difference = differenceInSeconds(formValues.endTime, formValues.startTime)
-
-    if( isNaN( difference ) || difference <= 0 ){
-      return "Not valid range of time"
-    }
-
-    if( !formValues.title ) return
-
-    console.log(difference);
-  }
   return (
     <>
       <Navbar/>
 
       <CalendarModal
-        isOpen={showModal}
-        onClose= {handleCloseModal}
+        isOpen={ dateModalIsOpen }
+        onClose= { handleCloseModal }
       >
         
         <div className="bg-white rounded-lg p-6">
@@ -136,7 +101,10 @@ export const CalendarPage = () => {
               {/* <input type="text" className='h-10 pl-2 py-2 rounded-md  border-2 w-full focus:outline-green-500' /> */}
               <textarea className='h-40 pl-2 py-2 rounded-md  border-2 w-full focus:outline-green-500 resize-none' cols="30" rows="10" placeholder='Write a brief description of this event' name='description' onChange={ handleInputChange } value={ formValues.description }></textarea>
             </div>
-
+            {
+              !formStatus.valid && <span className='text-red-500 block'> <FontAwesomeIcon icon={faCircleExclamation} /> {formStatus.errorMsg} </span>
+            }
+            
             <button className='w-24 h-11 p-2 mt-5 bg-green-500 border-sm rounded-md text-white hover:bg-green-400 active:bg-green-600'>
               Save <FontAwesomeIcon icon={faSave}  className="text-lg mx-2"/>
             </button>
