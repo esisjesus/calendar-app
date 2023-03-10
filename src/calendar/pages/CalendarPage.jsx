@@ -7,10 +7,9 @@ import { localizer } from '../../helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookmark, faCircleExclamation, faSave } from '@fortawesome/free-solid-svg-icons'
 import { useEventForm } from '../../hooks';
-import { useDispatch, useSelector } from 'react-redux';
-import { closeDateModal, openDateModal } from '../../store';
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-big-calendar/lib/css/react-big-calendar.css'
+import { useUiState } from '../../hooks/useUiState';
 
 const events = [{
   title: 'Boss birthday',
@@ -39,6 +38,7 @@ export const CalendarPage = () => {
   
   const onDoubleClick = (event) => {
     console.log({doubleClick: event});
+    handleShowModal()
   } 
   const onSelect = (event) => {
     console.log({select: event});
@@ -47,18 +47,9 @@ export const CalendarPage = () => {
     localStorage.setItem('lastView', event)
   } 
   
-  //Modal Functions
-
-  const dateModalIsOpen = useSelector(( state ) => state.ui.dateModalIsOpen)
-  const dispatch = useDispatch()
-  
-  const handleShowModal = () => {
-    dispatch(openDateModal)
-  };
-
-  const handleCloseModal = () => {
-    dispatch(closeDateModal)
-  };
+  //UI hook (modal)
+  const {dateModalIsOpen, handleShowModal, handleCloseModal,} = useUiState()
+ 
 
   //Form Functions
   const {formStatus, formValues, handleDateChange, handleInputChange, handleSubmit} = useEventForm()
