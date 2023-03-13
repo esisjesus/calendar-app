@@ -6,25 +6,14 @@ import { CalendarEventBox, CalendarModal, Navbar } from "../components"
 import { localizer } from '../../helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookmark, faCircleExclamation, faSave } from '@fortawesome/free-solid-svg-icons'
-import { useEventForm } from '../../hooks';
+import { useCalendarStore, useEventForm } from '../../hooks';
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { useUiState } from '../../hooks/useUiState';
-
-const events = [{
-  title: 'Boss birthday',
-  notes: 'Buy a cake',
-  start: new Date(),
-  end:  addHours(new Date(), 0.5),
-  user: {
-    _id:'123',
-    name: 'Jesus E.'
-  }
-}]
+import { useSelector } from 'react-redux';
 
 
-export const CalendarPage = () => {
-  
+export const CalendarPage = () => {  
   //Calendar Functions
   const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'month')
   
@@ -46,6 +35,9 @@ export const CalendarPage = () => {
   const onChangeView = (event) => {
     localStorage.setItem('lastView', event)
   } 
+
+  //Events:
+  const {handleActivateEvent, handleAddEvent, events} = useCalendarStore()
   
   //UI hook (modal)
   const {dateModalIsOpen, handleShowModal, handleCloseModal,} = useUiState()
