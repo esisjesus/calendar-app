@@ -7,9 +7,9 @@ export const calendarSlice = createSlice({
         events: [
             {
                 title: 'Boss birthday',
-                notes: 'Buy a cake',
-                start: new Date(),
-                end:  addHours(new Date(), 0.5),
+                description: 'Buy a cake',
+                startTime: new Date(),
+                endTime:  addHours(new Date(), 1),
                 user: {
                   _id:'123',
                   name: 'Jesus E.'

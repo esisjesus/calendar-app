@@ -6,11 +6,9 @@ import { CalendarEventBox, CalendarModal, Navbar } from "../components"
 import { localizer } from '../../helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookmark, faCircleExclamation, faSave } from '@fortawesome/free-solid-svg-icons'
-import { useCalendarStore, useEventForm } from '../../hooks';
+import { useCalendarStore, useEventForm, useUiState} from '../../hooks';
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { useUiState } from '../../hooks/useUiState';
-import { useSelector } from 'react-redux';
 
 
 export const CalendarPage = () => {  
@@ -18,7 +16,9 @@ export const CalendarPage = () => {
   const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'month')
   
   const eventStyleGetter = (event, start, end, isSelected) => {
-    const className = "bg-green-500"
+    let className = "bg-green-500"
+
+    isSelected && (className = "bg-green-700 border-green-800 border outline-green-800")
     
     return {
       className
@@ -26,7 +26,7 @@ export const CalendarPage = () => {
   }
   
   const onDoubleClick = (event) => {
-    console.log({doubleClick: event});
+    handleActivateEvent(event)
     handleShowModal()
   } 
   const onSelect = (event) => {
@@ -37,14 +37,13 @@ export const CalendarPage = () => {
   } 
 
   //Events:
-  const {handleActivateEvent, handleAddEvent, events} = useCalendarStore()
-  
+  const {handleActivateEvent, handleAddEvent, events, activeEvent} = useCalendarStore()
   //UI hook (modal)
   const {dateModalIsOpen, handleShowModal, handleCloseModal,} = useUiState()
  
 
   //Form Functions
-  const {formStatus, formValues, handleDateChange, handleInputChange, handleSubmit} = useEventForm()
+  const {formStatus, formValues, handleDateChange, handleInputChange, handleSubmit} = useEventForm( )
 
   return (
     <>
@@ -64,25 +63,25 @@ export const CalendarPage = () => {
 
             <div>
               <h2 className='text-lg my-1'>Start date and hour</h2>
-              <DatePicker  selected={ formValues.startTime } name='startTime' onChange={ ( date ) => handleDateChange(date, 'startTime') } minDate={formValues.startTime} dateFormat='Pp' showTimeSelect className='h-10 pl-2 py-2 rounded-md  border-2 w-full focus:outline-green-500'/>
+              <DatePicker  selected={ activeEvent? activeEvent.startTime : formValues.startTime } name='startTime' onChange={ ( date ) => handleDateChange(date, 'startTime') } minDate={formValues.startTime} dateFormat='Pp' showTimeSelect className='h-10 pl-2 py-2 rounded-md  border-2 w-full focus:outline-green-500'/>
             </div>
             
             <div>
               <h2 className='text-lg my-1'>End date and hour</h2>
-              <DatePicker selected={ formValues.endTime } name='endTime' onChange={ ( date ) => handleDateChange(date, 'endTime') } minDate={formValues.startTime} dateFormat='Pp' showTimeSelect className='h-10 pl-2 py-2 rounded-md  border-2 w-full focus:outline-green-500'/>
+              <DatePicker selected={ activeEvent? activeEvent.endTime : formValues.endTime } name='endTime' onChange={ ( date ) => handleDateChange(date, 'endTime') } minDate={formValues.startTime} dateFormat='Pp' showTimeSelect className='h-10 pl-2 py-2 rounded-md  border-2 w-full focus:outline-green-500'/>
             </div>
 
             <hr />
 
             <div>
               <h2 className='text-lg my-1'>Title and notes</h2>
-              <input type="text" className='h-10 pl-2 py-2 rounded-md  border-2 w-full focus:outline-green-500' placeholder='Event title'  name='title' onChange={ handleInputChange } value={ formValues.title }/>
+              <input type="text" className='h-10 pl-2 py-2 rounded-md  border-2 w-full focus:outline-green-500' placeholder='Event title'  name='title' onChange={ handleInputChange } value={ activeEvent? activeEvent.title: formValues.title }/>
             </div>
             
             <div>
               <h2 className='text-lg my-1'>Short description</h2>
               {/* <input type="text" className='h-10 pl-2 py-2 rounded-md  border-2 w-full focus:outline-green-500' /> */}
-              <textarea className='h-40 pl-2 py-2 rounded-md  border-2 w-full focus:outline-green-500 resize-none' cols="30" rows="10" placeholder='Write a brief description of this event' name='description' onChange={ handleInputChange } value={ formValues.description }></textarea>
+              <textarea className='h-40 pl-2 py-2 rounded-md  border-2 w-full focus:outline-green-500 resize-none' cols="30" rows="10" placeholder='Write a brief description of this event' name='description' onChange={ handleInputChange } value={ activeEvent? activeEvent.description : formValues.description }></textarea>
             </div>
             {
               !formStatus.valid && <span className='text-red-500 block'> <FontAwesomeIcon icon={faCircleExclamation} /> {formStatus.errorMsg} </span>
@@ -101,8 +100,8 @@ export const CalendarPage = () => {
         localizer={localizer}
         defaultView = {lastView}
         events={ events }
-        startAccessor="start"
-        endAccessor="end"
+        startAccessor="startTime"
+        endAccessor="endTime"
         style={{ height: 'calc(100vh - 112px)' }}
         eventPropGetter = { eventStyleGetter }
         components= {{

@@ -1,8 +1,11 @@
 import { differenceInSeconds } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useCalendarStore } from "./useCalendarStore";
 
 export const useEventForm = () => {
-    
+  
+    const { activeEvent } = useCalendarStore()
+
     const [formValues, setFormValues] = useState({
         startTime: undefined,
         endTime: undefined,
@@ -15,6 +18,13 @@ export const useEventForm = () => {
         errorMsg: null
       })
       
+      useEffect(() => {
+        if(activeEvent != null){
+          setFormValues({...activeEvent})
+        }
+      }, [activeEvent])
+      
+
       const handleInputChange = ( event ) => {
     
         console.log(event);
