@@ -1,17 +1,28 @@
 import { differenceInSeconds } from "date-fns";
 import { useEffect, useState } from "react";
+import { uuidv4Generator } from "../helpers";
 import { useCalendarStore } from "./useCalendarStore";
+import { useUiState } from "./useUiState";
+
+const baseFormValues = {
+  startTime: '',
+  endTime: '',
+  title: '',
+  description: '',
+  _id: '',
+  user: {
+    name: 'Jesus E.', 
+    id: 123 
+  } 
+}
 
 export const useEventForm = () => {
   
-    const { activeEvent } = useCalendarStore()
+    const { activeEvent, handleAddEvent } = useCalendarStore()
 
-    const [formValues, setFormValues] = useState({
-        startTime: undefined,
-        endTime: undefined,
-        title: undefined,
-        description: undefined
-      })
+    const {handleCloseModal} = useUiState()
+
+    const [formValues, setFormValues] = useState(baseFormValues)
     
       const [formStatus, setFormStatus] = useState({
         valid: true,
@@ -23,7 +34,6 @@ export const useEventForm = () => {
           setFormValues({...activeEvent})
         }
       }, [activeEvent])
-      
 
       const handleInputChange = ( event ) => {
     
@@ -47,6 +57,15 @@ export const useEventForm = () => {
         })
     
       }
+
+      const  handleSetValuesOfSelected = (object) => {
+        setFormValues({
+          ...object, _id: uuidv4Generator(), user: {
+            name: 'Jesus E.', 
+            id: 123 
+          } 
+        })
+      }
     
       const handleSubmit = evt => {
         evt.preventDefault()
@@ -69,6 +88,17 @@ export const useEventForm = () => {
           valid:true,
           errorMsg: null
         })
+
+        handleAddEvent( {...formValues } )
+        handleCloseModal()
+        handleClearFormValues()
+        
+      }
+
+      const handleClearFormValues = () => {
+        setFormValues(
+          baseFormValues
+        )
       }
 
       return {
@@ -76,7 +106,9 @@ export const useEventForm = () => {
         formStatus,
         handleInputChange,
         handleDateChange,
-        handleSubmit
+        handleSetValuesOfSelected,
+        handleSubmit,
+        handleClearFormValues
       }
 
 }

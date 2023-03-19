@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { addHours } from "date-fns";
+import { uuidv4Generator } from "../../helpers";
 
 export const calendarSlice = createSlice({
     name: 'calendar',
@@ -10,6 +11,7 @@ export const calendarSlice = createSlice({
                 description: 'Buy a cake',
                 startTime: new Date(),
                 endTime:  addHours(new Date(), 1),
+                _id: uuidv4Generator(),
                 user: {
                   _id:'123',
                   name: 'Jesus E.'
@@ -21,7 +23,8 @@ export const calendarSlice = createSlice({
     },
     reducers : {
         addEvent: (state, action) => {
-            state.events.push(action.payload)
+            state.events =  [...state.events, action.payload]
+            state.activeEvent = null
         },
         activateEvent: (state, action) => {
             state.activeEvent = action.payload

@@ -6,20 +6,24 @@ export const useCalendarStore = () => {
     const { activeEvent, events } = useSelector( (state) => state.calendar )
     const dispatch = useDispatch()
     
-    const handleAddEvent = ({title, description, startTime, endTime, user}) => {
-        dispatch( addEvent({title, description, startTime, endTime, user}) ) 
+    const handleAddEvent = (object) => {
+        dispatch( addEvent({...object}) ) 
     }
 
-    const handleActivateEvent = ({title, description, startTime, endTime, user}) => {
-        dispatch( activateEvent({title, description, startTime, endTime, user}) )
+    const handleActivateEvent = (object) => {
+        dispatch( activateEvent({...object}) )
     }
-
+    
+    const handleClearActiveEvent = () => {
+        dispatch( activateEvent(null) )
+    }
 
     return {
         events, 
         activeEvent,
         handleAddEvent,
-        handleActivateEvent
+        handleActivateEvent,
+        handleClearActiveEvent
     }
 }
 
