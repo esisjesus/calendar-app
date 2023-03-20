@@ -3,6 +3,8 @@ import { useCalendarStore, useEventForm, useUiState} from '../../hooks';
 import { Calendar } from 'react-big-calendar'
 import { CalendarEventBox, CalendarModal, Navbar, FormModal } from "../components"
 import { localizer } from '../../helpers'
+import { AddNewEventButton } from '../components/AddNewEventButton';
+import { addHours } from 'date-fns';
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
@@ -25,6 +27,11 @@ export const CalendarPage = () => {
     handleSetValuesOfSelected({startTime: event.start, endTime: event.end})
     handleShowModal()
   } 
+
+  const handleClickOnPlusButton = () => {
+    handleSetValuesOfSelected({startTime: new Date(), endTime: addHours( new Date,  0.5) })
+    handleShowModal()
+  }
 
   const onDoubleClick = (event) => {
     handleActivateEvent(event)
@@ -78,6 +85,8 @@ export const CalendarPage = () => {
         onSelectSlot = { handleSelectSlot }
         selectable
       />
+
+      <AddNewEventButton  handleEvent = {handleClickOnPlusButton}/>
     </>
   )
 }
