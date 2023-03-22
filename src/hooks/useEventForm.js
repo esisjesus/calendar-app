@@ -18,7 +18,7 @@ const baseFormValues = {
 
 export const useEventForm = () => {
   
-    const { events, activeEvent, handleAddEvent, handleUpdateEvent } = useCalendarStore()
+    const { events, activeEvent, handleAddEvent, handleUpdateEvent, handleDeleteEvent } = useCalendarStore()
 
     const {handleCloseModal} = useUiState()
 
@@ -103,6 +103,12 @@ export const useEventForm = () => {
         
       }
 
+      const handleDelete = () => {
+        handleDeleteEvent(formValues._id)
+        handleCloseModal()
+        handleClearFormValues()
+      }
+
       const handleClearFormValues = () => {
         setFormValues(
           baseFormValues
@@ -116,6 +122,7 @@ export const useEventForm = () => {
         handleDateChange,
         handleSetValuesOfSelected,
         handleSubmit,
+        handleDelete,
         handleClearFormValues
       }
 

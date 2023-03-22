@@ -53,7 +53,7 @@ export const CalendarPage = () => {
  
   
   //Form Functions
-  const {formValues, formStatus, handleSetValuesOfSelected, handleInputChange, handleDateChange, handleSubmit } = useEventForm( )
+  const {formValues, formStatus, handleSetValuesOfSelected, handleInputChange, handleDateChange, handleSubmit, handleDelete } = useEventForm( )
 
 
 
@@ -65,7 +65,7 @@ export const CalendarPage = () => {
         isOpen={ dateModalIsOpen }
         onClose= { handleCloseModal }
       >
-        <FormModal formValues= {formValues} formStatus= {formStatus} handleInputChange={ handleInputChange } handleDateChange= { handleDateChange } handleSubmit = { handleSubmit }  />
+        <FormModal formValues= {formValues} formStatus= {formStatus} handleInputChange={ handleInputChange } handleDateChange= { handleDateChange } handleSubmit = { handleSubmit } handleDelete = {handleDelete} />
       </CalendarModal>
 
       <Calendar

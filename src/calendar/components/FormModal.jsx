@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookmark, faCircleExclamation, faSave, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useCalendarStore, useEventForm } from "../../hooks";
 
-export const FormModal = ({formValues, formStatus, handleDateChange, handleInputChange, handleSubmit}) => {
+export const FormModal = ({formValues, formStatus, handleDateChange, handleInputChange, handleSubmit, handleDelete}) => {
     
     const {activeEvent} = useCalendarStore()
 
@@ -53,7 +53,7 @@ export const FormModal = ({formValues, formStatus, handleDateChange, handleInput
               </button>
               {
                 activeEvent && activeEvent._id && 
-                <button className='w-auto h-11 p-2 mt-5 bg-red-500 border-sm rounded-md text-white hover:bg-red-400 active:bg-red-600'>
+                <button onClick={handleDelete} className='w-auto h-11 p-2 mt-5 bg-red-500 border-sm rounded-md text-white hover:bg-red-400 active:bg-red-600'>
                   Delete <FontAwesomeIcon icon={faTrash}  className="text-lg mx-2"/>
                 </button>
               }
