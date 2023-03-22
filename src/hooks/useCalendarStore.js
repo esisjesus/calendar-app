@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux"
-import { addEvent, activateEvent } from '../store'
+import {  addEvent, updateEvent, activateEvent } from '../store'
 
 export const useCalendarStore = () => {
     
     const { activeEvent, events } = useSelector( (state) => state.calendar )
+
     const dispatch = useDispatch()
     
     const handleAddEvent = (object) => {
@@ -14,6 +15,10 @@ export const useCalendarStore = () => {
         dispatch( activateEvent({...object}) )
     }
     
+    const handleUpdateEvent = (object) => {
+        dispatch( updateEvent({...object}) ) 
+    }
+    
     const handleClearActiveEvent = () => {
         dispatch( activateEvent(null) )
     }
@@ -22,6 +27,7 @@ export const useCalendarStore = () => {
         events, 
         activeEvent,
         handleAddEvent,
+        handleUpdateEvent,
         handleActivateEvent,
         handleClearActiveEvent
     }

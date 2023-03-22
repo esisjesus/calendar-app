@@ -18,7 +18,7 @@ const baseFormValues = {
 
 export const useEventForm = () => {
   
-    const { activeEvent, handleAddEvent } = useCalendarStore()
+    const { events, activeEvent, handleAddEvent, handleUpdateEvent } = useCalendarStore()
 
     const {handleCloseModal} = useUiState()
 
@@ -83,13 +83,21 @@ export const useEventForm = () => {
           valid: false,
           errorMsg: 'Title is required'
         })
-    
+
         setFormStatus({
           valid:true,
           errorMsg: null
         })
+        
+        if(
+          events.find(e => e._id === formValues._id) !== undefined
+        ){ 
+          handleUpdateEvent( {...formValues} )
+        }else{
+          handleAddEvent( {...formValues } )
+        }
 
-        handleAddEvent( {...formValues } )
+
         handleCloseModal()
         handleClearFormValues()
         

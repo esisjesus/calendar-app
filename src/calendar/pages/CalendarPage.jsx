@@ -86,7 +86,7 @@ export const CalendarPage = () => {
         selectable
       />
 
-      <AddNewEventButton  handleEvent = {handleClickOnPlusButton}/>
+      <AddNewEventButton handleEvent={handleClickOnPlusButton}/>
     </>
   )
 }

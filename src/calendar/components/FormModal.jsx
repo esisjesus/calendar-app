@@ -30,12 +30,12 @@ export const FormModal = ({formValues, formStatus, handleDateChange, handleInput
             <hr />
 
             <div>
-              <h2 className='text-lg my-1'>Title and notes</h2>
+              <h2 className='text-lg my-1'>Title</h2>
               <input type="text" className='h-10 pl-2 py-2 rounded-md  border-2 w-full focus:outline-green-500' placeholder='Event title'  name='title' onChange={ handleInputChange } value={ formValues.title }/>
             </div>
             
             <div>
-              <h2 className='text-lg my-1'>Short description</h2>
+              <h2 className='text-lg my-1'>Short description and notes</h2>
               {/* <input type="text" className='h-10 pl-2 py-2 rounded-md  border-2 w-full focus:outline-green-500' /> */}
               <textarea className='h-40 pl-2 py-2 rounded-md  border-2 w-full focus:outline-green-500 resize-none' cols="30" rows="10" placeholder='Write a brief description of this event' name='description' onChange={ handleInputChange } value={ formValues.description }></textarea>
             </div>
