@@ -7,21 +7,29 @@ export const useCalendarStore = () => {
 
     const dispatch = useDispatch()
     
-    const handleAddEvent = (object) => {
-        dispatch( addEvent({...object}) ) 
+    const handleSendForm =  async (object) => {
+            //Backend returns something
+
+            if(
+                events.find(e => e._id === object._id) !== undefined
+            )
+            { 
+                dispatch( updateEvent({...object}) ) 
+            }else
+            {
+                dispatch( addEvent({...object}) ) 
+            }
+    }
+
+    const handleDeleteEvent = async(id) => {
+        //Backend Returns Something
+        dispatch( deleteEvent( id ) )
     }
 
     const handleActivateEvent = (object) => {
         dispatch( activateEvent({...object}) )
     }
     
-    const handleUpdateEvent = (object) => {
-        dispatch( updateEvent({...object}) ) 
-    }
-    
-    const handleDeleteEvent = id => {
-        dispatch( deleteEvent( id ) )
-    }
 
     const handleClearActiveEvent = () => {
         dispatch( activateEvent(null) )
@@ -30,8 +38,7 @@ export const useCalendarStore = () => {
     return {
         events, 
         activeEvent,
-        handleAddEvent,
-        handleUpdateEvent,
+        handleSendForm,
         handleDeleteEvent,
         handleActivateEvent,
         handleClearActiveEvent
