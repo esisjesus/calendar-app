@@ -38,7 +38,7 @@ export const CalendarPage = () => {
   const {dateModalIsOpen, handleShowModal, handleCloseModal} = useUiState()
  
   //Form Functions
-  const {formValues, formStatus, handleSetValuesOfSelected, handleInputChange, handleDateChange, handleSubmit, handleDelete } = useEventForm( )
+  const {formValues, formStatus, handleSetValuesOfSelected, handleInputChange, handleDateChange, handleSubmit, handleDelete } = useEventForm()
 
 
 

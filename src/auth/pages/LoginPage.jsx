@@ -1,3 +1,5 @@
+import { signUpWithGooglePopup } from "../../../firebase/auth/authFunctions";
+
 export const LoginPage = () => {
 
   return (
@@ -10,7 +12,11 @@ export const LoginPage = () => {
             <h2 className='text-white font-bold'>Password</h2>
             <input type="password" placeholder='Password'  className='my-2 rounded-lg text-lg p-2 w-full'/>
             <br/>
-            <button className='bg-white text-green-500 p-3 rounded-md w-full mt-3 font-bold hover:bg-green-800 hover:text-white' type='submit'>Login</button>
+            <div className="text-center">
+              <button className='bg-white text-green-500 p-3 rounded-md w-full mt-3 font-bold hover:bg-green-800 hover:text-white' type='submit'>Login</button>
+              <span className="text-white inline-block my-2">or</span>
+              <button onClick={ signUpWithGooglePopup } className='bg-white text-red-500 p-3 rounded-md w-full mt-3 font-bold hover:bg-red-700 hover:text-white' type='submit'>Sign in with Google</button>
+            </div>
           </form>
 
           <form className='bg-white p-6 border-r border-t border-b border-gray-300 h-screen w-screen md:h-auto md:w-full rounded-tr-lg rounded-br-lg'>
