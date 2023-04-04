@@ -36,9 +36,7 @@ export const useEventForm = () => {
       }, [activeEvent])
 
       const handleInputChange = ( event ) => {
-    
-        console.log(event);
-    
+        
         setFormValues( prevState => {
           return {
             ...prevState,

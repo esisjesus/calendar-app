@@ -3,11 +3,12 @@
 import DatePicker from "react-datepicker";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookmark, faCircleExclamation, faSave, faTrash } from '@fortawesome/free-solid-svg-icons'
-import { useCalendarStore, useEventForm } from "../../hooks";
+import { useCalendarStore } from "../../hooks";
 
 export const FormModal = ({formValues, formStatus, handleDateChange, handleInputChange, handleSubmit, handleDelete}) => {
-    
-    const {activeEvent} = useCalendarStore()
+  
+  //Need the active event from store to retrieve the input values to the form
+  const {activeEvent} = useCalendarStore()
 
   return (
     <div className="bg-white rounded-lg p-6">

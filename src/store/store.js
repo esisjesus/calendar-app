@@ -6,5 +6,10 @@ export default configureStore({
     reducer: { 
         ui: uiReducer,
         calendar: calendarReducer,
-     }
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck:false
+    })
+
+
 })
