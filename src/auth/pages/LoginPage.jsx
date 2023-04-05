@@ -1,5 +1,4 @@
-import { LoginForm } from "../components/LoginForm";
-import { RegisterForm } from "../components/RegisterForm";
+import { LoginForm, RegisterForm } from "../../auth";
 
 export const LoginPage = () => {
 
@@ -13,7 +12,7 @@ export const LoginPage = () => {
           <RegisterForm/>
           
       </div>
-      
+
     </div>
   );
 };
