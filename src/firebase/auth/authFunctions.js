@@ -33,7 +33,6 @@ export const signInWithPassword = async(userInfo) => {
         
         console.error('An error occurred while signing in')
         throw new Error(error)
-        return error
 
     }
 

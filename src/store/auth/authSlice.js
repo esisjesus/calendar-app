@@ -5,8 +5,9 @@ export const authSlice = createSlice({
     initialState: {
         user: {
             username: null,
-            id: null
-        }
+            id: null, 
+        },
+        authenticated: false
     },
     reducers: {
         login: (state, action) => {
@@ -24,3 +25,5 @@ export const authSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { login, logout } = authSlice.actions;
+
+export default authSlice.reducer
