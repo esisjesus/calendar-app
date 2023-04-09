@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { createAccout, signInWithPassword, signUpWithGooglePopup } from "../firebase/auth/authFunctions"
-import { login } from "../store"
+import { useDispatch } from "react-redux"
+import {createAccout, signInWithPassword, signUpWithGooglePopup } from "../firebase/auth/authFunctions"
+import { login, logout } from "../store"
 import { updateProfile } from "firebase/auth"
 
 export const useAuthStore = () => {
@@ -67,6 +67,8 @@ export const useAuthStore = () => {
         
         dispatch(login( {username: response.displayName, id: response.uid} ))
     }
+
+    
 
     //TODO FINISH THE LOGIN AND CREATE ACCOUNT FLOW, AND UPDATE OF THE STATE
 
