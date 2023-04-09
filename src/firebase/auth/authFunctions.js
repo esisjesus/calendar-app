@@ -13,7 +13,7 @@ export const signUpWithGooglePopup = async() => {
 
     } catch (error) {
         console.error('An error occurred while signing in in with google')
-        throw new Error(error)
+        return new Error(error)
     }
 
 }

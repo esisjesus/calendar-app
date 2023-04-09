@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { useAuthStore } from "../../hooks/useAuthStore"
 import { useLoginForm } from "../../hooks/useLoginForm"
 
@@ -11,7 +10,7 @@ export const LoginForm = () => {
 
     const {formValues, handleInputChange} = useLoginForm(formStructure)
 
-    const {statusMessage, validateAndSubmitForLoginWithEmail } = useAuthStore()
+    const {statusMessage, validateAndSubmitForLoginWithEmail, handleGoogleLogin } = useAuthStore()
 
     const handleSubmit = (evt) => {
         evt.preventDefault()
@@ -32,7 +31,7 @@ export const LoginForm = () => {
                 <div className="text-center mt-6">
                     <button className='bg-white text-green-500 p-3 rounded-md w-full mt-3 font-bold hover:bg-green-800 hover:text-white' type='submit'>Login</button>
                     <span className="text-white inline-block my-2">or</span>
-                    <button  className='bg-white text-red-500 p-3 rounded-md w-full mt-3 font-bold hover:bg-red-700 hover:text-white' type='submit'>  Sign in with Google</button>
+                    <box onClick={handleGoogleLogin} className='bg-white text-red-500 p-3 rounded-md w-full mt-3 font-bold inline-block hover:bg-red-700 hover:text-white cursor-pointer'>  Sign in with Google</box>
                 </div>
             </form>
     )

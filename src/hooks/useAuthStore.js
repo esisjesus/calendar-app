@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { createAccout, signInWithPassword } from "../firebase/auth/authFunctions"
+import { createAccout, signInWithPassword, signUpWithGooglePopup } from "../firebase/auth/authFunctions"
 import { login } from "../store"
 import { updateProfile } from "firebase/auth"
 
@@ -54,9 +54,18 @@ export const useAuthStore = () => {
         //If everythin goes well update auth state 👌
         setStatusMessage("")
         
-        console.log(response);
         dispatch(login( {username: username, id: response.uid} ))
         
+    }
+
+    const handleGoogleLogin = async() => {
+        const response = await signUpWithGooglePopup()
+        if( !response.uid ) return setStatusMessage( response.message )
+
+        //If everythin goes well update auth state 👌
+        setStatusMessage("")
+        
+        dispatch(login( {username: response.displayName, id: response.uid} ))
     }
 
     //TODO FINISH THE LOGIN AND CREATE ACCOUNT FLOW, AND UPDATE OF THE STATE
@@ -64,6 +73,7 @@ export const useAuthStore = () => {
     return {
         statusMessage,
         validateAndSubmitForLoginWithEmail,
-        validateAndSubmitForCreateAccount
+        validateAndSubmitForCreateAccount,
+        handleGoogleLogin
     }
 }
