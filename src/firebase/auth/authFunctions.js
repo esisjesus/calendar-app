@@ -32,7 +32,7 @@ export const signInWithPassword = async(userInfo) => {
     } catch (error) {
         
         console.error('An error occurred while signing in')
-        throw new Error(error)
+        return new Error(error)
 
     }
 
@@ -51,8 +51,8 @@ export const createAccout = async(userInfo) => {
 
     } catch (error) {
         
-        console.error('An error occurred while creating an account')
-        throw new Error(error)
+        console.error('An error occurred while creating account')
+        return new Error(error)
 
     }
 

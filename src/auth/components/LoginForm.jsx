@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { useAuthStore } from "../../hooks/useAuthStore"
 import { useLoginForm } from "../../hooks/useLoginForm"
 
@@ -10,7 +11,7 @@ export const LoginForm = () => {
 
     const {formValues, handleInputChange} = useLoginForm(formStructure)
 
-    const { statusMessage, validateAndSubmitForLoginWithEmail } = useAuthStore()
+    const {statusMessage, validateAndSubmitForLoginWithEmail } = useAuthStore()
 
     const handleSubmit = (evt) => {
         evt.preventDefault()

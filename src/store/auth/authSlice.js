@@ -12,12 +12,14 @@ export const authSlice = createSlice({
     reducers: {
         login: (state, action) => {
             state.user = action.payload
+            state.authenticated = true
         },
         logout: (state) => {
             state.user = {
                 username: null,
                 id: null
             }
+            state.authenticated = false
         }
     }
 });
