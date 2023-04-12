@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import {  addEvent, updateEvent, activateEvent, deleteEvent } from '../store'
+import { postEventToDb } from "../firebase/db/dbFunctions"
 
 export const useCalendarStore = () => {
     
@@ -8,17 +9,24 @@ export const useCalendarStore = () => {
     const dispatch = useDispatch()
     
     const handleSendForm =  async (object) => {
-            //Backend returns something
 
-            if(
-                events.find(e => e._id === object._id) !== undefined
-            )
-            { 
-                dispatch( updateEvent({...object}) ) 
-            }else
-            {
-                dispatch( addEvent({...object}) ) 
-            }
+        try {
+            await postEventToDb({...object})
+
+        } catch (error) {
+            console.error(error)
+            return new Error(error)
+        }
+
+        if(
+            events.find(e => e._id === object._id) !== undefined
+        )
+        {
+            dispatch( updateEvent({...object}) ) 
+        }else
+        {
+            dispatch( addEvent({...object}) ) 
+        }
     }
 
     const handleDeleteEvent = async(id) => {

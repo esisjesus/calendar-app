@@ -1,8 +1,9 @@
-import { differenceInSeconds } from "date-fns";
+import { differenceInSeconds, yearsToQuarters } from "date-fns";
 import { useEffect, useState } from "react";
 import { uuidv4Generator } from "../helpers";
 import { useCalendarStore } from "./useCalendarStore";
 import { useUiState } from "./useUiState";
+import { useSelector } from "react-redux";
 
 const baseFormValues = {
   startTime: '',
@@ -10,13 +11,11 @@ const baseFormValues = {
   title: '',
   description: '',
   _id: '',
-  user: {
-    name: 'Jesus E.', 
-    id: 123 
-  } 
 }
 
 export const useEventForm = () => {
+
+    const { user } = useSelector(state => state.auth)
   
     const {activeEvent, handleSendForm, handleDeleteEvent } = useCalendarStore()
 
@@ -59,8 +58,8 @@ export const useEventForm = () => {
       const  handleSetValuesOfSelected = (object) => {
         setFormValues({
           ...object, _id: uuidv4Generator(), user: {
-            name: 'Jesus E.', 
-            id: 123 
+            name: user.displayName, 
+            id: user.uid
           } 
         })
       }
@@ -88,7 +87,7 @@ export const useEventForm = () => {
         })
         
         
-        handleSendForm( {...formValues} )
+        handleSendForm( {...formValues, user: { name: user.displayName, id: user.uid }} )
         handleCloseModal()
         handleClearFormValues()
         

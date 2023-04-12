@@ -1,11 +1,10 @@
 import { database } from "../config";
-import { ref, set, get, child } from "firebase/firebase-database";
+import { ref, set, get, child } from "firebase/database";
 
-export const postEventToDb = async( {title, description, startTime, endTime, _id, user} ) => {
+export const postEventToDb = async({ title, description, startTime, endTime, _id, user} ) => {
 
     try {
-
-        const postEventResponse = await set(ref(database, 'events/' + user._id), {
+        await set(ref(database, `events/${user.id}/${_id}`), {
           title,
           description,
           startTime,
@@ -13,8 +12,6 @@ export const postEventToDb = async( {title, description, startTime, endTime, _id
           _id,
           user
         });
-
-        return postEventResponse
         
     } catch (error) {
         console.error(error)
@@ -22,11 +19,7 @@ export const postEventToDb = async( {title, description, startTime, endTime, _id
     }
 }
 
-<<<<<<< HEAD
-const getDataFromDb = async(user) => {
-=======
-const getDataFromDb = async({ user }) => {
->>>>>>> 921f6af4445003da44ae9cde93dbaac7b5547d52
+export const getDataFromDb = async({ user }) => {
     try {
         const dataSnapshot = await get(child( ref(database) , `users/${user._id}`))
         if(dataSnapshot.exists()){
