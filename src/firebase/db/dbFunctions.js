@@ -22,7 +22,11 @@ export const postEventToDb = async( {title, description, startTime, endTime, _id
     }
 }
 
+<<<<<<< HEAD
 const getDataFromDb = async(user) => {
+=======
+const getDataFromDb = async({ user }) => {
+>>>>>>> 921f6af4445003da44ae9cde93dbaac7b5547d52
     try {
         const dataSnapshot = await get(child( ref(database) , `users/${user._id}`))
         if(dataSnapshot.exists()){
