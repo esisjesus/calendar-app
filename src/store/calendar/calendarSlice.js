@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addHours } from "date-fns";
-import { uuidv4Generator } from "../../helpers";
 
 export const calendarSlice = createSlice({
     name: 'calendar',

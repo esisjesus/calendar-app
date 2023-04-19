@@ -18,9 +18,9 @@ export const postEventToDb = async({ title, description, startTime, endTime, _id
     }
 }
 
-export const removeEventFromDb = async(id) => {
+export const removeEventFromDb = async(uid, eid) => {
     try{
-        await remove(ref(database, `events/${id}`))
+        await remove(ref(database, `events/${uid}/${eid}`))
         console.log('Event deleted')
     }catch(error){
         console.error(error)

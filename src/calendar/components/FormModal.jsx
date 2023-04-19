@@ -4,11 +4,18 @@ import DatePicker from "react-datepicker";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookmark, faCircleExclamation, faSave, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useCalendarStore } from "../../hooks";
+import { useSelector } from "react-redux";
 
 export const FormModal = ({formValues, formStatus, handleDateChange, handleInputChange, handleSubmit, handleDelete}) => {
   
   //Need the active event from store to retrieve the input values to the form
   const {activeEvent} = useCalendarStore()
+  const {user} = useSelector(state => state.auth)
+  const {handleDeleteEvent} = useCalendarStore()
+  const onDelete = (evt) => {
+    evt.preventDefault()
+    handleDeleteEvent(user.uid, activeEvent._id)
+  }
 
   return (
     <div className="bg-white rounded-lg p-6">
@@ -54,7 +61,7 @@ export const FormModal = ({formValues, formStatus, handleDateChange, handleInput
               </button>
               {
                 activeEvent && activeEvent._id && 
-                <button onClick={handleDelete} className='w-auto h-11 p-2 mt-5 bg-red-500 border-sm rounded-md text-white hover:bg-red-400 active:bg-red-600'>
+                <button onClick={onDelete} className='w-auto h-11 p-2 mt-5 bg-red-500 border-sm rounded-md text-white hover:bg-red-400 active:bg-red-600'>
                   Delete <FontAwesomeIcon icon={faTrash}  className="text-lg mx-2"/>
                 </button>
               }
