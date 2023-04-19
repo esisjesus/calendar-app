@@ -6,24 +6,14 @@ export const calendarSlice = createSlice({
     name: 'calendar',
     initialState: {
         events: [
-            {
-                title: 'Boss birthday',
-                description: 'Buy a cake',
-                startTime: new Date(),
-                endTime:  addHours(new Date(), 1),
-                _id: uuidv4Generator(),
-                user: {
-                  _id:'123',
-                  name: 'Jesus E.'
-                },
-            }
+            
         ],
 
         activeEvent: null
     },
     reducers : {
         addEvent: (state, action) => {
-            state.events =  [...state.events, action.payload]
+            state.events =  [ ...state.events, {...action.payload, startTime: new Date(action.payload.startTime), endTime: new Date(action.payload.endTime) } ]
             state.activeEvent = null
         },
         updateEvent: (state, action) => {
@@ -34,10 +24,15 @@ export const calendarSlice = createSlice({
         },
         activateEvent: (state, action) => {
             state.activeEvent = action.payload
+        },
+        setEvents : (state, action) => {
+            state.events =  action.payload.map(e => {
+                return {...e, startTime: new Date(e.startTime), endTime: new Date(e.endTime)}
+            })
         }
     }
 })
 
-export const { addEvent, updateEvent, deleteEvent, activateEvent  } = calendarSlice.actions
+export const { addEvent, updateEvent, deleteEvent, activateEvent, setEvents  } = calendarSlice.actions
 
 export default calendarSlice.reducer

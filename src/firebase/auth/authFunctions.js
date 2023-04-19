@@ -8,7 +8,6 @@ export const signUpWithGooglePopup = async() => {
 
         const signInResponse = await signInWithPopup( auth, googleProvider )
         const { user } = signInResponse
-        console.log(user);
         return user
 
     } catch (error) {
@@ -26,7 +25,6 @@ export const signInWithPassword = async(userInfo) => {
     try {
         const createUserResponse = await signInWithEmailAndPassword(auth, email, password)
         const { user } = createUserResponse
-        console.log(user);
         return user
 
     } catch (error) {
@@ -46,7 +44,6 @@ export const createAccout = async(userInfo) => {
     try {
         const createUserResponse = await createUserWithEmailAndPassword(auth, email, password)
         const { user } = createUserResponse
-        console.log(user);
         return user
 
     } catch (error) {

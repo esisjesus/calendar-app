@@ -1,8 +1,8 @@
 import { database } from "../config";
-import { ref, set, get, child } from "firebase/database";
+import { ref, set, get, child, remove } from "firebase/database";
 
 export const postEventToDb = async({ title, description, startTime, endTime, _id, user} ) => {
-
+    
     try {
         await set(ref(database, `events/${user.id}/${_id}`), {
           title,
@@ -19,11 +19,11 @@ export const postEventToDb = async({ title, description, startTime, endTime, _id
     }
 }
 
-export const getDataFromDb = async({ user }) => {
+export const getDataFromDb = async(id) => {
     try {
-        const dataSnapshot = await get(child( ref(database) , `users/${user._id}`))
+        const dataSnapshot = await get(child( ref(database) , `events/${id}`))
         if(dataSnapshot.exists()){
-            console.log( dataSnapshot.val() )
+            return dataSnapshot.val()
         }else{
             console.log( 'Data is unavailable' )
         }

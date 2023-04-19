@@ -23,7 +23,7 @@ export const AppRouter = () => {
         dispatch( logout() )
       }
     })
-    // Clean up the listener when the component is unmounted
+    // Clean up the listener when the component is unmountedv
     return () => unsubscribe()
   }, [])
 

@@ -25,7 +25,7 @@ export const CalendarPage = () => {
   }
 
   const onSelect = (event) => {
-    console.log({select: event});
+    // console.log({select: event});
   } 
 
   const onChangeView = (event) => {

@@ -49,7 +49,7 @@ export const useEventForm = () => {
         setFormValues(prevState => {
           return {
             ...prevState,
-            [target]: event
+            [target]: event.getTime()
           }
         })
     
@@ -86,7 +86,7 @@ export const useEventForm = () => {
           errorMsg: null
         })
         
-        
+        //TODO: Rethink where to do the time evaluation for readability, then refactor
         handleSendForm( {...formValues, user: { name: user.displayName, id: user.uid }} )
         handleCloseModal()
         handleClearFormValues()
