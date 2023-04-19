@@ -12,7 +12,7 @@ export const useCalendarStore = () => {
     
     useEffect(() => {
       getEvents()
-    }, [user])
+    }, [])
     
     const getEvents = async() => {
 
@@ -22,7 +22,7 @@ export const useCalendarStore = () => {
     }
 
     const handleSendForm =  async (object) => {
-        
+        debugger
         try {
             await postEventToDb({...object})
 

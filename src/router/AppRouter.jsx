@@ -4,12 +4,12 @@ import { CalendarPage } from "../calendar/pages"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { onAuthStateChanged } from "firebase/auth"
-import { login } from "../store"
+import { login, logout } from "../store"
 import { auth } from "../firebase/config"
 
 export const AppRouter = () => {
 
-  const { authenticated } = useSelector(state=> state.auth)
+  const { authenticated } = useSelector( state=> state.auth )
   const dispatch = useDispatch()
 
   useEffect(()=> {
