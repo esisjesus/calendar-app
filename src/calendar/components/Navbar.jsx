@@ -1,12 +1,15 @@
 import { faArrowLeft, faBars, faCalendar, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import { useAuthStore } from "../../hooks/useAuthStore";
 
 export const Navbar = () => {
   const [dropDown, setDropDown] = useState(false);
   const onDropDown = () => {
     setDropDown(!dropDown);
   };
+
+  const { handleSignOut } = useAuthStore()
 
   return (
     <nav className="transition rounded-b shadow-md bg-green-500 mb-12 pt-1 md:pt-0">
@@ -21,7 +24,7 @@ export const Navbar = () => {
           </ul>
         </div>
         <div className="w-1/3 flex flex-row justify-end items-center cursor-pointer">
-        <span className="text-white flex flex-row justify-end items-center cursor-pointer hover:font-bold hover:text-green-800">
+        <span onClick={handleSignOut} className="text-white flex flex-row justify-end items-center cursor-pointer hover:font-bold hover:text-green-800">
               <FontAwesomeIcon  icon={faArrowLeft} /> Logout
         </span>
         </div>
@@ -42,7 +45,7 @@ export const Navbar = () => {
             <FontAwesomeIcon icon={faCalendar}  className="text-3xl text-white m-3"/>
           </div>
           <div className="w-1/3 ">
-            <span className="text-white flex flex-row justify-end items-center cursor-pointer hover:font-bold">
+            <span onClick={handleSignOut} className="text-white flex flex-row justify-end items-center cursor-pointer hover:font-bold">
               <FontAwesomeIcon className="text-white" icon={faArrowLeft} /> Logout
             </span>
           </div>

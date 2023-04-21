@@ -4,7 +4,7 @@ import { CalendarPage } from "../calendar/pages"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { onAuthStateChanged } from "firebase/auth"
-import { login, logout } from "../store"
+import { login, logout, setEvents } from "../store"
 import { auth } from "../firebase/config"
 
 export const AppRouter = () => {
@@ -21,6 +21,7 @@ export const AppRouter = () => {
       }else{
         // User is signed out
         dispatch( logout() )
+        dispatch( setEvents([]) )
       }
     })
     // Clean up the listener when the component is unmountedv
