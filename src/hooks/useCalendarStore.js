@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
-import {  addEvent, updateEvent, activateEvent, deleteEvent, setEvents } from '../store'
+import { addEvent, updateEvent, activateEvent, deleteEvent, setEvents } from '../store'
 import { getDataFromDb, postEventToDb, removeEventFromDb } from "../firebase/db/dbFunctions"
-import { useEffect } from "react"
 import { useUiState } from "./useUiState"
 
 export const useCalendarStore = () => {
@@ -11,10 +10,6 @@ export const useCalendarStore = () => {
     const { user } = useSelector(state => state.auth)
 
     const dispatch = useDispatch()
-    
-    useEffect(() => {
-      getEvents()
-    }, [])
     
     const getEvents = async() => {
 
@@ -71,7 +66,8 @@ export const useCalendarStore = () => {
         handleSendForm,
         handleDeleteEvent,
         handleActivateEvent,
-        handleClearActiveEvent
+        handleClearActiveEvent,
+        getEvents
     }
 }
 

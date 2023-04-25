@@ -2,8 +2,10 @@ import { faArrowLeft, faBars, faCalendar, faXmark } from "@fortawesome/free-soli
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useAuthStore } from "../../hooks/useAuthStore";
+import { useSelector } from "react-redux";
 
 export const Navbar = () => {
+  const {user} = useSelector(state => state.auth)
   const [dropDown, setDropDown] = useState(false);
   const onDropDown = () => {
     setDropDown(!dropDown);
@@ -19,7 +21,7 @@ export const Navbar = () => {
           <ul className="h-full flex flex-row justify-around  items-center xl:pr-96 lg:pr-64 md:pr-28">
             <li className="w-full flex flex-row">
                 <FontAwesomeIcon icon={faCalendar}  className="text-2xl text-white m-3"/>
-                <h3 className="my-3 font-bold text-white">Jesus Esis</h3>
+                <h3 className="my-3 font-bold text-white"> {user.displayName} </h3>
             </li>
           </ul>
         </div>

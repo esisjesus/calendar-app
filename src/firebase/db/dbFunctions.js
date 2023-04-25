@@ -2,7 +2,6 @@ import { database } from "../config";
 import { ref, set, get, child, remove } from "firebase/database";
 
 export const postEventToDb = async({ title, description, startTime, endTime, _id, user} ) => {
-    debugger
     try {
         await set(ref(database, `events/${user.id}/${_id}`), {
           title,

@@ -54,7 +54,7 @@ export const useAuthStore = () => {
         //If everythin goes well update auth state 👌
         setStatusMessage("")
         
-        dispatch(login( {username: username, id: response.uid} ))
+        dispatch(login( {...response} ))
         
     }
 
