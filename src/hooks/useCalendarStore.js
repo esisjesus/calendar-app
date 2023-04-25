@@ -19,7 +19,6 @@ export const useCalendarStore = () => {
     }
 
     const handleSendForm =  async (object) => {
-        debugger
         try {
             //TODO: Rethink where to do the time evaluation for readability cause now its confusing, then refactor
             await postEventToDb({...object, startTime: object.startTime.getTime(), endTime: object.endTime.getTime()})
